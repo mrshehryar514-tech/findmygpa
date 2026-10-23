@@ -1,0 +1,800 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>FindMyGPA - Free GPA Calculator for BS, MS, MPhil, MBA & PhD</title>
+  <meta name="description" content="Use FindMyGPA to calculate your semester GPA online. Enter obtained marks, total marks, and course credit hours to calculate subject grades and weighted GPA.">
+  <meta name="keywords" content="GPA calculator, GPA calculator online, CGPA calculator, semester GPA calculator, BS GPA calculator, MS GPA calculator, MPhil GPA calculator, MBA GPA calculator, PhD GPA calculator, calculate GPA from marks, GPA calculator with credit hours, university GPA calculator Pakistan, calculate semester GPA from marks and credit hours">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#d9f5df">
+  <link rel="canonical" href="https://findmygpa.com/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="FindMyGPA - Free Online GPA Calculator">
+  <meta property="og:description" content="Calculate subject grades, GPA, and overall weighted GPA using marks and course credit hours.">
+  <meta property="og:url" content="https://findmygpa.com/">
+
+  <style>
+    :root {
+      --green: #238447;
+      --light-green: #d9f5df;
+      --pale-green: #f2fbf4;
+      --text: #1d3024;
+      --muted: #657469;
+      --border: #d8e5da;
+      --white: #ffffff;
+      --red: #b42318;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f8f5;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 20px;
+    }
+
+    .brand {
+      max-width: 1100px;
+      margin: auto;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--green);
+    }
+
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 32px 18px 60px;
+    }
+
+    .hero {
+      text-align: center;
+      margin: 0 auto 26px;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: clamp(1.8rem, 4vw, 2.7rem);
+      line-height: 1.2;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin: auto;
+      color: var(--muted);
+    }
+
+    .level-box {
+      max-width: 520px;
+      margin: 24px auto;
+      text-align: center;
+      padding: 20px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+    }
+
+    .level-box label {
+      display: block;
+      font-weight: 800;
+      margin-bottom: 9px;
+    }
+
+    select, input, button {
+      font: inherit;
+    }
+
+    select, input {
+      width: 100%;
+      min-height: 44px;
+      padding: 9px 10px;
+      border: 1px solid #cbd9ce;
+      border-radius: 8px;
+      background: white;
+      color: var(--text);
+    }
+
+    select:focus-visible, input:focus-visible, button:focus-visible {
+      outline: 3px solid #8bd6a0;
+      outline-offset: 2px;
+    }
+
+    .level-box select {
+      max-width: 340px;
+      text-align: center;
+    }
+
+    .calculator, .info-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 22px;
+    }
+
+    .section-heading {
+      padding: 20px 22px 6px;
+    }
+
+    .section-heading h2 {
+      margin: 0 0 5px;
+      font-size: 1.35rem;
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .94rem;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      padding: 16px 18px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 620px;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 11px;
+      text-align: center;
+    }
+
+    thead th {
+      background: var(--light-green);
+      color: #194c2b;
+      font-weight: 800;
+    }
+
+    tbody tr:nth-child(even) {
+      background: var(--pale-green);
+    }
+
+    td input, td select {
+      min-width: 95px;
+    }
+
+    .sn {
+      font-weight: 800;
+      width: 65px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 0 18px 20px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 9px;
+      padding: 11px 17px;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .primary {
+      background: var(--green);
+      color: white;
+    }
+
+    .secondary {
+      background: var(--light-green);
+      color: #194c2b;
+    }
+
+    button:hover { filter: brightness(.96); }
+
+    .message {
+      display: none;
+      margin: 0 18px 18px;
+      color: var(--red);
+      font-weight: 700;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      padding: 18px;
+    }
+
+    .stat {
+      background: var(--pale-green);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat span {
+      display: block;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .stat strong {
+      display: block;
+      margin-top: 5px;
+      color: var(--green);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      overflow-wrap: anywhere;
+    }
+
+    .results-note {
+      margin: 0 18px 18px;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .info-card {
+      padding: 22px;
+      overflow: visible;
+    }
+
+    .info-card h2 {
+      margin-top: 0;
+      font-size: 1.3rem;
+    }
+
+    .info-card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+    }
+
+    .info-card p, .info-card li {
+      color: #4e5e52;
+    }
+
+    .formula {
+      display: block;
+      background: var(--pale-green);
+      border: 1px solid var(--border);
+      padding: 12px;
+      border-radius: 8px;
+      overflow-wrap: anywhere;
+    }
+
+    details {
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+    }
+
+    details:last-child { border-bottom: 0; }
+
+    summary {
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 24px 16px;
+      background: white;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 650px) {
+      main { padding: 25px 12px 40px; }
+      .summary { grid-template-columns: 1fr; }
+      .actions { flex-direction: column; }
+      .actions button { width: 100%; }
+      .section-heading { padding: 17px 15px 5px; }
+      .table-wrap { padding: 12px; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "FindMyGPA",
+    "url": "https://findmygpa.com/",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate subject GPA and credit-hour-weighted overall GPA from obtained marks and total marks."
+  }
+  </script>
+</head>
+
+<body>
+  <header>
+    <div class="brand">FindMyGPA</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Free Online GPA Calculator</h1>
+      <p>
+        Calculate your subject grades, GPA, and overall weighted GPA.
+        Enter your obtained marks, total marks, and course credit hours
+        to estimate your semester performance.
+      </p>
+    </section>
+
+    <section class="level-box" aria-labelledby="level-heading">
+      <label id="level-heading" for="degreeLevel">Select Your Education Level</label>
+      <select id="degreeLevel">
+        <option value="BS">BS — Bachelor's Degree</option>
+        <option value="MS">MS / MPhil / MBA — Master's Degree</option>
+        <option value="PhD">PhD — Doctoral Degree</option>
+      </select>
+    </section>
+
+    <section class="calculator" aria-labelledby="subjects-heading">
+      <div class="section-heading">
+        <h2 id="subjects-heading">Enter Your Subject Details</h2>
+        <p>Add each subject and enter its marks and credit hours.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">SN</th>
+              <th scope="col">Obtained Marks</th>
+              <th scope="col">Total Marks</th>
+              <th scope="col">Course Credit Hrs.</th>
+            </tr>
+          </thead>
+          <tbody id="subjectRows"></tbody>
+        </table>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="secondary" id="addSubject">+ Add Subject</button>
+        <button type="button" class="secondary" id="removeSubject">− Remove Subject</button>
+        <button type="button" class="primary" id="calculate">Calculate GPA</button>
+        <button type="button" class="secondary" id="reset">Reset</button>
+      </div>
+
+      <p class="message" id="message" role="alert"></p>
+    </section>
+
+    <section class="calculator" id="results" aria-labelledby="results-heading" aria-live="polite">
+      <div class="section-heading">
+        <h2 id="results-heading">Your GPA Results</h2>
+        <p id="resultLevel">Selected level: BS</p>
+      </div>
+
+      <div class="summary">
+        <div class="stat">
+          <span>Total Obtained Marks</span>
+          <strong id="totalObtained">—</strong>
+        </div>
+        <div class="stat">
+          <span>Total Possible Marks</span>
+          <strong id="totalPossible">—</strong>
+        </div>
+        <div class="stat">
+          <span>Overall Marks Percentage</span>
+          <strong id="overallPercentage">—</strong>
+        </div>
+        <div class="stat">
+          <span>Credit Hours Counted</span>
+          <strong id="totalCredits">—</strong>
+        </div>
+        <div class="stat">
+          <span>Weighted Overall GPA</span>
+          <strong id="overallGpa">—</strong>
+        </div>
+        <div class="stat">
+          <span>Subjects Included</span>
+          <strong id="subjectCount">—</strong>
+        </div>
+      </div>
+
+      <div class="section-heading">
+        <h2>Subject-Wise Grade and GPA</h2>
+        <p>Only subjects with credit hours greater than zero count toward the weighted GPA.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">SN</th>
+              <th scope="col">Percentage</th>
+              <th scope="col">Grade</th>
+              <th scope="col">Subject GPA</th>
+            </tr>
+          </thead>
+          <tbody id="resultRows">
+            <tr><td colspan="4">Enter your subjects and select Calculate GPA.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="results-note">
+        Note: This calculator uses an example grading scale. Your university's
+        official grading policy may produce different grades and GPA values.
+      </p>
+    </section>
+
+    <section class="info-card">
+      <h2>How to Calculate GPA from Marks and Credit Hours</h2>
+      <p>
+        FindMyGPA helps BS, MS, MPhil, MBA, and PhD students estimate their
+        grades using marks and course credit hours. Add your subjects, enter
+        the obtained marks and maximum marks, choose credit hours from 0 to 6,
+        and calculate your results.
+      </p>
+
+      <h3>GPA Calculation Formula</h3>
+      <span class="formula">
+        Overall GPA = Sum of (Subject GPA × Course Credit Hours) ÷
+        Sum of Counted Course Credit Hours
+      </span>
+
+      <p>
+        For example, if a subject has a GPA of 3.7 and carries 3 credit hours,
+        it contributes 11.1 weighted grade points to the overall calculation.
+      </p>
+
+      <h3>Example Grade Scale Used</h3>
+      <div class="table-wrap" style="padding:0">
+        <table>
+          <thead>
+            <tr><th>Marks Percentage</th><th>Grade</th><th>GPA</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>85% and above</td><td>A</td><td>4.00</td></tr>
+            <tr><td>80%–84.99%</td><td>A−</td><td>3.70</td></tr>
+            <tr><td>75%–79.99%</td><td>B+</td><td>3.30</td></tr>
+            <tr><td>70%–74.99%</td><td>B</td><td>3.00</td></tr>
+            <tr><td>65%–69.99%</td><td>B−</td><td>2.70</td></tr>
+            <tr><td>61%–64.99%</td><td>C+</td><td>2.30</td></tr>
+            <tr><td>58%–60.99%</td><td>C</td><td>2.00</td></tr>
+            <tr><td>55%–57.99%</td><td>C−</td><td>1.70</td></tr>
+            <tr><td>50%–54.99%</td><td>D</td><td>1.00</td></tr>
+            <tr><td>Below 50%</td><td>F</td><td>0.00</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        The scale above is illustrative, not a universal BS, MS, MBA, MPhil,
+        or PhD grading policy. Confirm your institution's grade boundaries
+        before relying on the result for official academic decisions.
+      </p>
+    </section>
+
+    <section class="info-card">
+      <h2>Frequently Asked Questions</h2>
+
+      <details>
+        <summary>How do I calculate GPA from marks?</summary>
+        <p>
+          Enter the marks you obtained and the total possible marks for each
+          subject. The calculator converts the percentage to an estimated
+          subject GPA using its example grading scale.
+        </p>
+      </details>
+
+      <details>
+        <summary>How are course credit hours used in GPA calculation?</summary>
+        <p>
+          Each subject GPA is multiplied by its credit hours. The weighted
+          values are added together and divided by the total counted credit
+          hours to estimate the overall GPA.
+        </p>
+      </details>
+
+      <details>
+        <summary>Can I calculate GPA for BS, MS, MPhil, MBA, and PhD?</summary>
+        <p>
+          Yes. Select your education level at the top. The calculation is
+          based on the entered marks and credit hours; grading policies may
+          vary by institution and program.
+        </p>
+      </details>
+
+      <details>
+        <summary>What happens if I select zero credit hours?</summary>
+        <p>
+          A subject with zero credit hours can display its percentage, grade,
+          and subject GPA, but it does not affect the weighted overall GPA.
+        </p>
+      </details>
+
+      <details>
+        <summary>Is FindMyGPA free to use?</summary>
+        <p>
+          Yes. The calculator runs in your browser without an account or
+          backend server. Your entered subject information is not sent to a
+          server by this page.
+        </p>
+      </details>
+
+      <details>
+        <summary>Is this calculator's GPA official?</summary>
+        <p>
+          No. It provides an estimate using the displayed grading scale.
+          Always use your university's official grading policy and transcript
+          rules for confirmed academic results.
+        </p>
+      </details>
+    </section>
+  </main>
+
+  <footer>
+    <p>FindMyGPA · Free Online GPA Calculator · Calculations run in your browser.</p>
+  </footer>
+
+  <script>
+    (() => {
+      const rows = document.getElementById("subjectRows");
+      const resultRows = document.getElementById("resultRows");
+      const message = document.getElementById("message");
+      const level = document.getElementById("degreeLevel");
+
+      // Example grading scale. Change it to match your university.
+      function getGrade(percentage) {
+        if (percentage >= 85) return { grade: "A", gpa: 4.00 };
+        if (percentage >= 80) return { grade: "A−", gpa: 3.70 };
+        if (percentage >= 75) return { grade: "B+", gpa: 3.30 };
+        if (percentage >= 70) return { grade: "B", gpa: 3.00 };
+        if (percentage >= 65) return { grade: "B−", gpa: 2.70 };
+        if (percentage >= 61) return { grade: "C+", gpa: 2.30 };
+        if (percentage >= 58) return { grade: "C", gpa: 2.00 };
+        if (percentage >= 55) return { grade: "C−", gpa: 1.70 };
+        if (percentage >= 50) return { grade: "D", gpa: 1.00 };
+        return { grade: "F", gpa: 0.00 };
+      }
+
+      function addSubject() {
+        const tr = document.createElement("tr");
+        const serial = rows.children.length + 1;
+
+        tr.innerHTML = `
+          <td class="sn">${serial}</td>
+          <td>
+            <input type="number" class="obtained"
+              aria-label="Obtained marks for subject ${serial}"
+              min="0" step="any" placeholder="e.g. 85" required>
+          </td>
+          <td>
+            <input type="number" class="total"
+              aria-label="Total marks for subject ${serial}"
+              min="0.01" step="any" placeholder="e.g. 100" required>
+          </td>
+          <td>
+            <select class="credits"
+              aria-label="Credit hours for subject ${serial}">
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3" selected>3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+          </td>
+        `;
+
+        rows.appendChild(tr);
+        updateSerialNumbers();
+      }
+
+      function updateSerialNumbers() {
+        [...rows.children].forEach((row, index) => {
+          const serial = index + 1;
+          row.querySelector(".sn").textContent = serial;
+          row.querySelector(".obtained").setAttribute(
+            "aria-label", `Obtained marks for subject ${serial}`
+          );
+          row.querySelector(".total").setAttribute(
+            "aria-label", `Total marks for subject ${serial}`
+          );
+          row.querySelector(".credits").setAttribute(
+            "aria-label", `Credit hours for subject ${serial}`
+          );
+        });
+      }
+
+      function format(value, digits = 2) {
+        return Number(value).toLocaleString(undefined, {
+          maximumFractionDigits: digits
+        });
+      }
+
+      function showMessage(text) {
+        message.textContent = text;
+        message.style.display = "block";
+      }
+
+      function clearMessage() {
+        message.textContent = "";
+        message.style.display = "none";
+      }
+
+      function calculateGPA() {
+        clearMessage();
+
+        const subjects = [...rows.children];
+
+        if (subjects.length < 1) {
+          showMessage("At least one subject is required to calculate GPA.");
+          return;
+        }
+
+        const parsed = [];
+
+        for (let i = 0; i < subjects.length; i++) {
+          const row = subjects[i];
+          const obtainedText = row.querySelector(".obtained").value.trim();
+          const totalText = row.querySelector(".total").value.trim();
+          const credits = Number(row.querySelector(".credits").value);
+
+          if (obtainedText === "" || totalText === "") {
+            showMessage(
+              `Please enter obtained and total marks for subject ${i + 1}.`
+            );
+            return;
+          }
+
+          const obtained = Number(obtainedText);
+          const total = Number(totalText);
+
+          if (
+            !Number.isFinite(obtained) ||
+            !Number.isFinite(total) ||
+            obtained < 0 ||
+            total <= 0 ||
+            obtained > total
+          ) {
+            showMessage(
+              `Check subject ${i + 1}: total marks must be above zero, and obtained marks must be between zero and total marks.`
+            );
+            return;
+          }
+
+          const percentage = (obtained / total) * 100;
+          const gradeInfo = getGrade(percentage);
+
+          parsed.push({
+            serial: i + 1,
+            obtained,
+            total,
+            credits,
+            percentage,
+            grade: gradeInfo.grade,
+            gpa: gradeInfo.gpa
+          });
+        }
+
+        const totalObtained = parsed.reduce((sum, s) => sum + s.obtained, 0);
+        const totalPossible = parsed.reduce((sum, s) => sum + s.total, 0);
+        const totalCredits = parsed.reduce((sum, s) => sum + s.credits, 0);
+        const weightedPoints = parsed.reduce(
+          (sum, s) => sum + s.gpa * s.credits, 0
+        );
+
+        const overallPercentage = totalPossible > 0
+          ? (totalObtained / totalPossible) * 100
+          : 0;
+
+        document.getElementById("totalObtained").textContent =
+          format(totalObtained);
+        document.getElementById("totalPossible").textContent =
+          format(totalPossible);
+        document.getElementById("overallPercentage").textContent =
+          format(overallPercentage) + "%";
+        document.getElementById("totalCredits").textContent =
+          format(totalCredits);
+        document.getElementById("subjectCount").textContent = parsed.length;
+
+        document.getElementById("resultLevel").textContent =
+          "Selected level: " + level.options[level.selectedIndex].text;
+
+        document.getElementById("overallGpa").textContent =
+          totalCredits > 0
+            ? format(weightedPoints / totalCredits) + " / 4.00"
+            : "N/A";
+
+        resultRows.replaceChildren();
+
+        parsed.forEach(subject => {
+          const tr = document.createElement("tr");
+
+          [
+            subject.serial,
+            format(subject.percentage) + "%",
+            subject.grade,
+            format(subject.gpa)
+          ].forEach(value => {
+            const td = document.createElement("td");
+            td.textContent = value;
+            tr.appendChild(td);
+          });
+
+          resultRows.appendChild(tr);
+        });
+
+        if (totalCredits === 0) {
+          showMessage(
+            "Subject results are calculated, but overall GPA cannot be calculated because all subjects have zero credit hours."
+          );
+        }
+      }
+
+      function resetCalculator() {
+        rows.replaceChildren();
+
+        resultRows.innerHTML =
+          '<tr><td colspan="4">Enter your subjects and select Calculate GPA.</td></tr>';
+
+        [
+          "totalObtained",
+          "totalPossible",
+          "overallPercentage",
+          "totalCredits",
+          "overallGpa",
+          "subjectCount"
+        ].forEach(id => {
+          document.getElementById(id).textContent = "—";
+        });
+
+        document.getElementById("resultLevel").textContent =
+          "Selected level: " + level.options[level.selectedIndex].text;
+
+        clearMessage();
+
+        // Start with three subject rows.
+        for (let i = 0; i < 3; i++) {
+          addSubject();
+        }
+      }
+
+      document.getElementById("addSubject").addEventListener("click", () => {
+        addSubject();
+        clearMessage();
+      });
+
+      document.getElementById("removeSubject").addEventListener("click", () => {
+        if (rows.children.length > 1) {
+          rows.removeChild(rows.lastElementChild);
+          updateSerialNumbers();
+          clearMessage();
+        } else {
+          showMessage("At least one subject is required. You cannot remove the last subject.");
+        }
+      });
+
+      document.getElementById("calculate").addEventListener(
+        "click", calculateGPA
+      );
+
+      document.getElementById("reset").addEventListener(
+        "click", resetCalculator
+      );
+
+      level.addEventListener("change", () => {
+        document.getElementById("resultLevel").textContent =
+          "Selected level: " + level.options[level.selectedIndex].text;
+      });
+
+      resetCalculator();
+    })();
+  </script>
+</body>
+</html>
